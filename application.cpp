@@ -69,7 +69,9 @@ void Application::ask()
 void Application::runApp()
 {
     m_timerWorking->stop();
-    QDesktopServices::openUrl(m_config->url());
+    bool ok = QDesktopServices::openUrl(m_config->url());
+    if (!ok)
+        QMessageBox::critical(this, "Erreur", QString("Impossible de lancer : %1").arg(m_config->url().toString()));
 }
 
 void Application::startTimer(const QTime &time)
@@ -96,5 +98,5 @@ void Application::updateIcon()
 
     m_trayIcon->setIcon(QIcon(QString(":/images/cerv%1.png").arg(image)));
     QTime remaining = QTime::fromMSecsSinceStartOfDay(m_timerWorking->remainingTime());
-    m_trayIcon->setToolTip(QString(tr("Temps de travail restant : %1:%2").arg(remaining.hour(), remaining.second())));
+    m_trayIcon->setToolTip(QString(tr("Temps de travail restant : %1:%2").arg(remaining.hour(), remaining.minute())));
 }

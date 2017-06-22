@@ -19,7 +19,7 @@ Config::Config(QWidget *parent) :
         close();
     });
     connect(ui->buttonFile, &QPushButton::clicked, this, [this]() {
-        ui->urlLineEdit->setText(QFileDialog::getOpenFileName(this));
+        ui->urlLineEdit->setText(QFileDialog::getOpenFileUrl(this).toString());
     });
 }
 
